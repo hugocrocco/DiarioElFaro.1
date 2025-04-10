@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diario El Faro</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+    <h1><img src="../imagenes/logoinicio.png" alt="Logo de Diario El Faro" width="50" height="50" style="vertical-align: middle;">
+        Diario El Faro</h1>
+        <div id="reloj" style="font-size: 24px; font-family: monospace; text-align: center; margin: 10px 0;"></div>
+
+        
+
+
+    <h2>Secciones</h2>
+    <ul>
+        <li><a href="../html/inicio.html">Inicio</a></li>
+        <li><a href="../html/noticias.html">Noticias</a></li>
+        <li><a href="../html/deportes.html">Deportes</a></li>
+        <li><a href="../html/negocios.html">Negocios</a></li>
+    </ul>
+   
+
+   
+<center>
+  <h2>Agregar nuevo artículo</h2>
+  <form id="formulario-articulo">
+    <label for="titulo">Título:</label><br>
+    <input type="text" id="titulo" name="titulo" required><br><br>
+
+    <label for="contenido">Contenido:</label><br>
+    <textarea id="contenido" name="contenido" rows="5" cols="50" required></textarea><br><br>
+
+    <label for="seccion">Sección:</label><br>
+    <select id="seccion" name="seccion" required>
+      
+      <option value="noticias">Noticias</option>
+      <option value="deportes">Deportes</option>
+      <option value="negocios">Negocios</option>
+    </select><br><br>
+
+    <button type="submit">Agregar artículo</button>
+  </form>
+</center>
+
+<script>
+  const formulario = document.getElementById("formulario-articulo");
+
+  formulario.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const titulo = document.getElementById("titulo").value;
+    const contenido = document.getElementById("contenido").value;
+    const seccion = document.getElementById("seccion").value;
+
+    const nuevoArticulo = { titulo, contenido, seccion };
+
+    // Obtenemos artículos guardados o iniciamos un array vacío
+    let articulos = JSON.parse(localStorage.getItem("articulos")) || [];
+
+    articulos.push(nuevoArticulo);
+
+    localStorage.setItem("articulos", JSON.stringify(articulos));
+
+    alert("Artículo agregado correctamente.");
+
+    formulario.reset();
+  });
+</script>
+
+
+   
+    
+    <script>
+        function actualizarReloj() {
+          const ahora = new Date();
+          let horas = ahora.getHours().toString().padStart(2, '0');
+          let minutos = ahora.getMinutes().toString().padStart(2, '0');
+          let segundos = ahora.getSeconds().toString().padStart(2, '0');
+          const horaActual = `${horas}:${minutos}:${segundos}`;
+          document.getElementById('reloj').textContent = `Hora actual: ${horaActual}`;
+        }
+      
+        setInterval(actualizarReloj, 1000);
+        actualizarReloj(); // Mostrar de inmediato
+      </script>
+</body></center>
+
+<div></center>
+<h2>Contacto</h2>
+<form id="formulario-contacto">
+  <label for="nombre">Nombre:</label><br>
+  <input type="text" id="nombre" name="nombre" required><br><br>
+
+  <label for="email">Correo electrónico:</label><br>
+  <input type="email" id="email" name="email" required><br><br>
+
+  <label for="asunto">Asunto:</label><br>
+  <input type="text" id="asunto" name="asunto" required><br><br>
+
+  <label for="mensaje">Mensaje:</label><br>
+  <textarea id="mensaje" name="mensaje" rows="5" cols="50" required></textarea><br><br>
+
+  <button type="submit">Enviar</button>
+</form>
+
+<p id="mensaje-confirmacion" style="color: green;"></p>
+
+<script>
+  const formularioContacto = document.getElementById("formulario-contacto");
+  const mensajeConfirmacion = document.getElementById("mensaje-confirmacion");
+
+  formularioContacto.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const nombre = document.getElementById("nombre").value;
+    const email = document.getElementById("email").value;
+    const asunto = document.getElementById("asunto").value;
+    const mensaje = document.getElementById("mensaje").value;
+
+    const nuevoMensaje = {
+      nombre,
+      email,
+      asunto,
+      mensaje,
+      fecha: new Date().toLocaleString()
+    };
+
+    let mensajes = JSON.parse(localStorage.getItem("mensajesContacto")) || [];
+    mensajes.push(nuevoMensaje);
+    localStorage.setItem("mensajesContacto", JSON.stringify(mensajes));
+
+    formularioContacto.reset();
+    mensajeConfirmacion.textContent = "✅ Mensaje enviado correctamente. ¡Gracias por contactarnos!";
+  });
+</script>
+</center></div>
+</html>
